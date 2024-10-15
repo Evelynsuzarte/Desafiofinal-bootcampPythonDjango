@@ -13,3 +13,6 @@
 
 A líder do squad dividiu as atividades para o desafio final de acordo com o que foi discutido em reunião com o squad para a divisão das atividades.
 O planejamento da atividade seguiu também a partir da reunião do squad para montar uma modelagem do sistema. As decisões tomadas foram de senso comum a todas as integrantes. Apesar de todas terem suas atividades no desafio, todas tiveram o compromisso de revisar e contribuir com o código.
+
+# Conteúdo complementar
+[[Tech Doc] Projeto portal de notícias](https://docs.google.com/document/d/1Rl0bsNkwe33u7iUQSsCE8R_yI662rgQBPCbA6Vj_FXI/edit?usp=sharing)
