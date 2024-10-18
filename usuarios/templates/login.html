@@ -1,8 +1,8 @@
 {% extends "base.html" %} 
-{% block 'titulo' %}Login{% endblock 'titulo' %}
+{% block titulo %}Login{% endblock titulo %}
 {% block header %}{% include "partials/navbar.html" %} {% endblock %}
 {% load static %}
-{%block 'conteudo' %}
+{%block conteudo %}
 <div class="container py-5">
   <br>
   {% if messages %}
@@ -33,4 +33,4 @@
   </div>
 </div>
 
-{% endblock 'conteudo' %}
+{% endblock conteudo %}

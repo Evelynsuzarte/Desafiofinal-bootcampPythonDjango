@@ -1,0 +1,8 @@
+from django.urls import path
+from . import views
+
+
+urlpatterns = [
+    path('', views.news_feed, name = 'news_feed'),
+    path('news_completa/<int:id>/', views.news_completa, name='news_completa'), 
+]

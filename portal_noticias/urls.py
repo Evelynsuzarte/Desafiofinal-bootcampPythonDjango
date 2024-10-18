@@ -18,12 +18,14 @@ from django.contrib import admin
 from django.urls import path, include
 from django.shortcuts import redirect
 from django.contrib.auth.views import LogoutView
+from django.conf import settings
+from django.conf.urls.static import static
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path("", lambda request: redirect('feed/')),
+    path("", lambda request: redirect('news/')),
     path('auth/', include('usuarios.urls')),
     path("plataforma/", include('plataforma.urls')),
-    path("feed/", include('feed.urls')),
-     path('auth/logout/', LogoutView.as_view(next_page='feed_app:feed'), name='logout'),
-]
+    path("news/", include('news.urls')),
+    path('auth/logout/', LogoutView.as_view(next_page='news_app:news'), name='logout'),
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
