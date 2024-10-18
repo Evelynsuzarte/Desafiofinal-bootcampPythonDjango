@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+{% block header %}{% include "partials/navbar.html" %} {% endblock %}
+{% block conteudo %}
+<div class="container">
+    <h1>Criar Notícia</h1>
+    <form action = " {% url 'criar_artigo' %}"method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div class="form-group">
+            <label for="titulo">Título</label>
+            <input type="text" class="form-control" id="titulo" name="titulo">
+        </div>
+        <div class="form-group">
+            <label for="subtitulo">Subtítulo</label>
+            <input type="text" class="form-control" id="subtitulo" name="subtitulo">
+        </div> 
+        <div class="form-group">
+            <label for="conteudo">Conteúdo</label>
+            <textarea class="form-control" id="conteudo" name="conteudo"></textarea>
+        </div>
+        <div class="form-group">
+            <label for="">Imagem</label>
+            <input type="file" class="form-control" id="" name="imagem">
+        </div>
+        <div class="form-group">
+            <label for="categoria">Categoria</label>
+            <select class="form-control" id="categoria" name="categoria">
+                {% for categoria in categorias %}
+                <option value="{{ categoria.id }}">{{ categoria.nome }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <button type="submit" class="btn btn-primary">Publicar</button>
+    </form>
+</div>
+{% endblock %}
