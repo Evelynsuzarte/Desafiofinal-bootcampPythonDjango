@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 
-{% block titulo %} Home {% endblock %}
+{% block titulo %} Busca de Notícias {% endblock %}
 
 {% block header %}
   {% include "partials/navbar.html" %}
@@ -9,49 +9,77 @@
 {% block conteudo %}
 <div class="container mt-5">
   <!-- Search Form -->
-  <form class="form-inline mb-2" style="width: 100%">
-    <div class="input-group w-100">
-      <input
-        class="form-control"
-        type="search"
-        placeholder="Pesquisar"
-        aria-label="Pesquisar"
-      />
-      <div class="input-group-append">
-        <button class="btn btn-outline-success" type="submit">
-          <i class="fas fa-search"></i>
-        </button>
-      </div>
+  <form method="GET" action="{% url 'buscar_noticias' %}" class="row mb-4">
+    <div class="col-md-4 mb-2">
+      <input 
+        type="text" 
+        name="q" 
+        placeholder="Buscar por palavra-chave..." 
+        value="{{ query }}" 
+        class="form-control" />
+    </div>
+
+    <div class="col-md-3 mb-2">
+      <input 
+        type="text" 
+        name="autor" 
+        placeholder="Buscar por autor..." 
+        value="{{ autor }}" 
+        class="form-control" />
+    </div>
+
+    <div class="col-md-3 mb-2">
+      <select name="categoria" class="form-select">
+        <option value="">-- Selecione uma categoria --</option>
+        {% for cat in categorias %}
+          <option value="{{ cat.id }}" 
+                  {% if cat.id|stringformat:"s" == categoria %}selected{% endif %}>
+            {{ cat.nome }}
+          </option>
+        {% endfor %}
+      </select>
+    </div>
+
+    <div class="col-md-2 mb-2">
+      <button type="submit" class="btn btn-primary w-100">Buscar</button>
     </div>
   </form>
 
-  <!-- News Cards -->
-  {% for noticia in noticias %}
-    <div class="card mb-3">
-      <div class="row g-0">
-        <a href="{% url 'news_completa' noticia.id %}" class="btn stretched-link"></a>
+  <!-- Resultados -->
+  <h2 class="mb-4">Resultados:</h2>
 
-        {% if noticia.imagem %}
-        <div class="col-md-4">
-          <img
-            class="card-img rounded-start"
-            src="{{ noticia.imagem.url }}"
-            alt="{{ noticia.titulo }}"
-            style="height: 200px; object-fit: contain"
-          />
+  {% if noticias %}
+    <div class="row">
+      {% for noticia in noticias %}
+        <div class="col-md-6 mb-4">
+          <div class="card h-100">
+            {% if noticia.imagem %}
+              <img 
+                src="{{ noticia.imagem.url }}" 
+                class="card-img-top" 
+                alt="{{ noticia.titulo }}" 
+                style="height: 200px; object-fit: cover;">
+            {% endif %}
+            <div class="card-body">
+              <h5 class="card-title">{{ noticia.titulo }}</h5>
+              <p class="card-text text-muted">{{ noticia.subtitulo }}</p>
+              <p class="card-text">
+                <small>Autor: {{ noticia.autor.username }} | 
+                Categoria: {{ noticia.categoria.nome }}</small>
+              </p>
+              <p class="card-text">
+                <small>Publicado em: {{ noticia.data_publicacao }}</small>
+              </p>
+              <a href="{% url 'news_completa' noticia.id %}" class="stretched-link"></a>
+            </div>
+          </div>
         </div>
-        {% endif %}
-
-        <div class="card-body {% if noticia.imagem %}col-md-8{% else %}col-md-12{% endif %}">
-          <span class="badge rounded-pill text-bg-dark">{{ noticia.categoria }}</span>
-          <h1 class="card-title h4">{{ noticia.titulo }}</h1>
-          <h2 class="card-text h6">{{ noticia.subtitulo }}</h2>
-          <p class="card-text">
-            <small class="text-muted">{{ noticia.autor.username }} em {{ noticia.data_publicacao }}</small>
-          </p>
-        </div>
-      </div>
+      {% endfor %}
     </div>
-  {% endfor %}
+  {% else %}
+    <div class="alert alert-warning" role="alert">
+      Nenhuma notícia encontrada.
+    </div>
+  {% endif %}
 </div>
 {% endblock %}
