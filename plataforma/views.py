@@ -26,6 +26,9 @@ def criar_artigo(request):
             titulo=titulo, subtitulo=subtitulo, conteudo=conteudo, imagem=imagem, categoria=categoria, autor=request.user
         )
         
+        if not categoria:
+            messages.add_message(request, constants.WARNING, "Você precisa escolher uma categoria.")
+        
         return redirect('home')
     
     categorias = Categoria.objects.all()
@@ -48,7 +51,7 @@ def buscar_noticias(request):
     if categoria:
         noticias = noticias.filter(categoria__id=categoria)
 
-    categorias = Categoria.objects.all()  # Para exibir no formulário
+    categorias = Categoria.objects.all()  
 
     return render(request, 'noticias.html', {
         'noticias': noticias, 
