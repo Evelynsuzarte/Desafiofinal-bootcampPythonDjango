@@ -8,6 +8,14 @@
 
 {% block conteudo %}
 <div class="container mt-5">
+    {% if messages %}
+        {% for message in messages %}
+        <div class="alert {{message.tags}}" role="alert">
+          {{message}}
+        </div>
+      {% endfor %}
+
+    {% endif %}
   <!-- Search Form -->
   <form method="GET" action="{% url 'buscar_noticias' %}" class="row mb-4">
     <div class="col-md-4 mb-2">
