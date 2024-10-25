@@ -7,7 +7,7 @@ from django.db.models import Q
 
 @login_required(login_url = '/auth/login')
 def home(request):
-    noticias = Noticia.objects.all()
+    noticias = Noticia.objects.filter(autor=request.user)
     return render(request, 'home.html', {'noticias': noticias})
 
 def criar_artigo(request):
