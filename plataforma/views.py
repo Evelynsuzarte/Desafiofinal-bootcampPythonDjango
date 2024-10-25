@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from .models import Noticia, Categoria
 from django.contrib import messages
@@ -7,8 +7,8 @@ from django.db.models import Q
 
 @login_required(login_url = '/auth/login')
 def home(request):
-    
-    return render(request, 'home.html')
+    noticias = Noticia.objects.all()
+    return render(request, 'home.html', {'noticias': noticias})
 
 def criar_artigo(request):
     return render (request, 'criar_artigo.html')
@@ -26,13 +26,20 @@ def criar_artigo(request):
             titulo=titulo, subtitulo=subtitulo, conteudo=conteudo, imagem=imagem, categoria=categoria, autor=request.user
         )
         
-        if not categoria:
-            messages.add_message(request, constants.WARNING, "Você precisa escolher uma categoria.")
-        
         return redirect('home')
     
     categorias = Categoria.objects.all()
     return render(request, 'criar_artigo.html', {'categorias': categorias})
+
+def excluir_noticia(request, id):
+    if request.method == 'POST':
+        noticia = get_object_or_404(Noticia, id=id)
+        noticia.delete()
+        messages.add_message(request, constants.SUCCESS, "Notícia excluída com sucesso.")
+        return redirect('home')
+    else:
+        messages.add_message(request, constants.ERROR, "Você não tem permissão para excluir uma notícia.")
+        return redirect('home')
 
 def buscar_noticias(request):
     query = request.GET.get('q')  # Palavra-chave
