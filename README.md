@@ -42,11 +42,12 @@ O planejamento da atividade seguiu também a partir da reunião do squad para mo
 - Criar um novo app: <br>
 `python manage.py startapp nome_app`
 
-- Criar um usuário administrador: <br>
-`python manage.py createsuperuser`
-
 - Executar alterações no banco de dados: <br>
 `python manage.py makemigrations`
 
 - Aplicar alterações no banco de dados: <br>
 `python manage.py migrate`
+
+
+- Criar um usuário administrador: <br>
+`python manage.py createsuperuser`
