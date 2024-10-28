@@ -10,9 +10,7 @@ def home(request):
     noticias = Noticia.objects.filter(autor=request.user)
     return render(request, 'home.html', {'noticias': noticias})
 
-def criar_artigo(request):
-    return render (request, 'criar_artigo.html')
-
+@login_required(login_url = '/auth/login')
 def criar_artigo(request):
     
     if request.method == 'POST':
@@ -66,3 +64,7 @@ def buscar_noticias(request):
         'autor': autor, 
         'categorias': categorias
     })
+    
+def news_completa(request, id):
+    noticia = get_object_or_404(Noticia, id=id)  
+    return render(request, 'news_completa.html', {'noticia': noticia})

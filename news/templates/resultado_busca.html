@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 
-{% block titulo %} KJ News Feed {% endblock %}
+{% block titulo %} KJ News Resultado da busca{% endblock %}
 
 {% block header %}
   {% include "partials/navbar.html" %}
@@ -52,6 +52,9 @@
     </div>
   </form>
 
+  <!-- Resultados -->
+  <h2 class="mb-4">Resultados:</h2>
+
   {% if noticias %}
     <div class="row">
       {% for noticia in noticias %}
@@ -81,7 +84,7 @@
       {% endfor %}
     </div>
   {% else %}
-    <div role="alert">
+    <div class="alert alert-warning" role="alert">
       Nenhuma notícia encontrada.
     </div>
   {% endif %}
