@@ -1,25 +1,26 @@
+{% load static %}
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
-  <a class="navbar-brand" href="{% url 'news_feed' %}">Portal de notícias</a>
+  <a class="navbar-brand" href="{% url 'news_feed' %}"><img src="{% static 'assets/img/logo_kj_news.png' %}" alt="Logo" height="40" class="d-inline-block align-top"></a>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarContent" aria-controls="navbarContent" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
   <div class="collapse navbar-collapse justify-content-end" id="navbarContent">
     <ul class="navbar-nav">
       {% if not user.is_authenticated %}
-        <li class="nav-item">
+        <li class="nav-item mx-2">
           <a class="btn btn-outline-dark" href="{% url 'cadastro' %}">Cadastro</a>
         </li>
-        <li class="nav-item">
+        <li class="nav-item mx-2">
           <a class="btn btn-outline-dark" href="{% url 'login' %}">Login</a>
         </li>
       {% else %}
-        <li class="nav-item">
+        <li class="nav-item mx-2">
           <a class="btn btn-outline-dark" href="{% url 'home' %}">Área do autor</a>
         </li>
-        <li class="nav-item">
+        <li class="nav-item mx-2">
           <a class="btn btn-outline-info" href="{% url 'criar_artigo' %}">Escrever artigo</a>
         </li>
-        <li class="nav-item">
+        <li class="nav-item mx-2">
           <a class="btn btn-outline-danger" href="{% url 'logout' %}">Sair</a>
         </li>
       {% endif %}
