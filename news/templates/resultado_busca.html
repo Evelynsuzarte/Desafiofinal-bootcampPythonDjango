@@ -16,43 +16,12 @@
       {% endfor %}
 
     {% endif %}
-  <form method="GET" action="{% url 'buscar_noticias' %}" class="row mb-4">
-    <div class="col-md-4 mb-2">
-      <input 
-        type="text" 
-        name="q" 
-        placeholder="Buscar por palavra-chave..." 
-        value="{{ query }}" 
-        class="form-control" />
-    </div>
-
-    <div class="col-md-3 mb-2">
-      <input 
-        type="text" 
-        name="autor" 
-        placeholder="Buscar por autor..." 
-        value="{{ autor }}" 
-        class="form-control" />
-    </div>
-
-    <div class="col-md-3 mb-2">
-      <select name="categoria" class="form-select">
-        <option value="">-- Selecione uma categoria --</option>
-        {% for cat in categorias %}
-          <option value="{{ cat.id }}" 
-                  {% if cat.id|stringformat:"s" == categoria %}selected{% endif %}>
-            {{ cat.nome }}
-          </option>
-        {% endfor %}
-      </select>
-    </div>
+    {% include "partials/search_bar.html" %}
 
     <div class="col-md-2 mb-2">
-      <button type="submit" class="btn btn-primary w-100">Buscar</button>
+      <a href="{% url 'news_feed' %}"><button  class="btn btn-info w-100">Voltar</button></a>
     </div>
-  </form>
 
-  <!-- Resultados -->
   <h2 class="mb-4">Resultados:</h2>
 
   {% if noticias %}
