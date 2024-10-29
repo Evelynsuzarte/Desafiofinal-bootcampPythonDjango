@@ -9,10 +9,13 @@
     <ul class="navbar-nav">
       {% if not user.is_authenticated %}
         <li class="nav-item m-2">
+          <a class="btn btn-outline-dark" href="{% url 'login' %}">Login</a>
+        </li>
+        <li class="nav-item m-2">
           <a class="btn btn-outline-dark" href="{% url 'cadastro' %}">Cadastro</a>
         </li>
         <li class="nav-item m-2">
-          <a class="btn btn-outline-dark" href="{% url 'login' %}">Login</a>
+          <a class="btn btn-outline-dark" href="/admin">Sou Editor</a>
         </li>
       {% else %}
         <li class="nav-item m-2">
