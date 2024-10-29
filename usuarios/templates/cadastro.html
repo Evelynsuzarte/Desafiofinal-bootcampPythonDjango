@@ -3,17 +3,18 @@
 {%block conteudo %}
 <div class="container py-5">
   <br>
-{% if messages %}
-  {% for message in messages %}
-  <div class="alert {{message.tags}}" role="alert">
-    {{message}}
-  </div>
-  {% endfor %}
 
-{% endif %}
   <div class="row">
     <div class="col-md-3"></div>
     <div class="col-md-6">
+      {% if messages %}
+        {% for message in messages %}
+          <div class="alert {{message.tags}}" role="alert">
+            {{message}}
+          </div>
+        {% endfor %}
+
+{% endif %}
       <h1>Cadastre-se</h1>
       <hr>
       <form method = "POST" action = {% url 'valida_cadastro' %}> {% csrf_token %}
@@ -26,7 +27,7 @@
         <label>Senha:</label>
         <input name ='senha' class = "form-control" type="password" placeholder="Senha" />
         <br>
-        <input class = "btn btn-success btn-block"type="submit" value="Enviar" />
+        <input class = "btn btn-outline-primary btn-block w-100"type="submit" value="Enviar" />
         <p class= "my-2">Já tem uma conta? Vá para <a href= {% url "login" %}>Login </a>
       </form>
     </div>
