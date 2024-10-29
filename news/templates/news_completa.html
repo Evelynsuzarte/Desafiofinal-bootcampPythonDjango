@@ -13,9 +13,9 @@
     <h1>{{ noticia.titulo }}</h1>
     <div class="d-flex">
         <div class="flex-shrink-0">
-            {% if noticia.imagem %}
+            {% if noticia.capa %}
             <img
-            src="{{ noticia.imagem.url }}"
+            src="{{ noticia.capa.url }}"
             alt="{{ noticia.titulo }}"      
             class="img-fluid img-small"
             style="height: 400px; object-fit: cover"
@@ -25,7 +25,8 @@
     </div>
 
     <h2 class="h4">{{ noticia.subtitulo }}</h2>
-    <p class = "flex-grow-1" >{{noticia.conteudo}}</p>
+    <hr>
+    <div class = "flex-grow-1" >{{noticia.conteudo |safe }}</div>
   </div>
 </div>
 {% endblock %}
