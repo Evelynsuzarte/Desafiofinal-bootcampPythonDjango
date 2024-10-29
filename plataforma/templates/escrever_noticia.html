@@ -10,8 +10,8 @@
   {% endfor %}
 
 {% endif %}
-    <h1>Criar Notícia</h1>
-    <form action = " {% url 'criar_artigo' %}"method="POST" enctype="multipart/form-data">
+    <h1>Escrever Notícia</h1>
+    <form action = " {% url 'escrever_noticia' %}"method="POST" enctype="multipart/form-data">
         {% csrf_token %}
         <div class="form-group">
             <label for="titulo">Título</label>

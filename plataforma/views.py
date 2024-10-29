@@ -10,7 +10,7 @@ def home(request):
     return render(request, 'home.html', {'noticias': noticias})
 
 @login_required(login_url = '/auth/login')
-def criar_artigo(request):
+def escrever_noticia(request):
     
     if request.method == 'POST':
         titulo = request.POST.get('titulo')
@@ -26,7 +26,7 @@ def criar_artigo(request):
         return redirect('home')
     
     categorias = Categoria.objects.all()
-    return render(request, 'criar_artigo.html', {'categorias': categorias})
+    return render(request, 'escrever_noticia.html', {'categorias': categorias})
 
 def excluir_noticia(request, id):
     if request.method == 'POST':
