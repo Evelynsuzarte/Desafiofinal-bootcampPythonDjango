@@ -1,0 +1,35 @@
+<form method="GET" action="{% url 'buscar_noticias' %}" class="row mb-4">
+    <div class="col-md-4 mb-2">
+      <input 
+        type="text" 
+        name="q" 
+        placeholder="Buscar por palavra-chave..." 
+        value="{{ query }}" 
+        class="form-control" />
+    </div>
+
+    <div class="col-md-3 mb-2">
+      <input 
+        type="text" 
+        name="autor" 
+        placeholder="Buscar por autor..." 
+        value="{{ autor }}" 
+        class="form-control" />
+    </div>
+
+    <div class="col-md-3 mb-2">
+      <select name="categoria" class="form-select">
+        <option value="">-- Selecione uma categoria --</option>
+        {% for cat in categorias %}
+          <option value="{{ cat.id }}" 
+                  {% if cat.id|stringformat:"s" == categoria %}selected{% endif %}>
+            {{ cat.nome }}
+          </option>
+        {% endfor %}
+      </select>
+    </div>
+
+    <div class="col-md-2 mb-2">
+      <button type="submit" class="btn btn-primary w-100">Buscar</button>
+    </div>
+</form>
