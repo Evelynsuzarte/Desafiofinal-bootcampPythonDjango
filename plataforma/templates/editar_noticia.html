@@ -46,9 +46,19 @@
             {% endif %}
             <input type="file" class="form-control" id="imagem" name="imagem">
         </div>
+        <div class="mb-3">
+            <div class="form-group">
+                <label for="categoria">Categoria</label>
+                <select class="form-control" id="categoria" name="categoria">
+                    {% for categoria in categorias %}
+                    <option value="{{ categoria.id }}">{{ categoria.nome }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+         </div>
 
         <button type="submit" class="btn btn-primary">Salvar</button>
-        <a href="{% url 'detalhes_noticia' noticia.id %}" class="btn btn-secondary">Cancelar</a>
+        <a href="{% url 'news_completa' noticia.id %}" class="btn btn-secondary">Cancelar</a>
     </form>
 </div>
 {% endblock %}

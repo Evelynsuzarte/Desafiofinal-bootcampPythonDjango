@@ -38,7 +38,32 @@ def excluir_noticia(request, id):
         messages.add_message(request, constants.ERROR, "Você não tem permissão para excluir uma notícia.")
         return redirect('home')
 
+@login_required(login_url='/auth/login')
+def editar_noticia(request, id):
+    noticia = get_object_or_404(Noticia, id=id, autor=request.user)
+    
+    if request.method == 'POST':
+        titulo = request.POST.get('titulo')
+        subtitulo = request.POST.get('subtitulo')
+        conteudo = request.POST.get('conteudo')
+        imagem = request.FILES.get('imagem')
+        categoria = Categoria.objects.get(id=request.POST.get('categoria'))
 
+        noticia.titulo = titulo
+        noticia.subtitulo = subtitulo
+        noticia.conteudo = conteudo
+        noticia.categoria = categoria
+
+        if imagem:
+            noticia.imagem = imagem
+        
+        noticia.save()
+
+        messages.success(request, "Noticia atualizada com sucesso!")
+        return redirect('home')
+    
+    categorias = Categoria.objects.all()
+    return render(request, 'editar_noticia.html', {'noticia': noticia, 'categorias': categorias})
     
 def news_completa(request, id):
     noticia = get_object_or_404(Noticia, id=id)  
