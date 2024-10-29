@@ -1,43 +1,153 @@
 {% extends 'base.html' %}
-{% block header %}{% include "partials/navbar.html" %} {% endblock %}
-{% block conteudo %}
-<div class="container">
-{% if messages %}
-  {% for message in messages %}
-  <div class="alert {{message.tags}}" role="alert">
-    {{message}}
-  </div>
-  {% endfor %}
+{% block titulo %}
+    Escrever Notícia
+{% endblock %}
+{% block header %}
+  {% include "partials/navbar.html" %}
+{% endblock %}
 
-{% endif %}
-    <h1>Escrever Notícia</h1>
-    <form action = " {% url 'escrever_noticia' %}"method="POST" enctype="multipart/form-data">
-        {% csrf_token %}
-        <div class="form-group">
-            <label for="titulo">Título</label>
-            <input type="text" class="form-control" id="titulo" name="titulo">
-        </div>
-        <div class="form-group">
-            <label for="subtitulo">Subtítulo</label>
-            <input type="text" class="form-control" id="subtitulo" name="subtitulo">
-        </div> 
-        <div class="form-group">
-            <label for="conteudo">Conteúdo</label>
-            <textarea class="form-control" id="conteudo" name="conteudo"></textarea>
-        </div>
-        <div class="form-group">
-            <label for="">Imagem</label>
-            <input type="file" class="form-control" id="" name="imagem">
-        </div>
-        <div class="form-group">
-            <label for="categoria">Categoria</label>
-            <select class="form-control" id="categoria" name="categoria">
-                {% for categoria in categorias %}
-                <option value="{{ categoria.id }}">{{ categoria.nome }}</option>
-                {% endfor %}
-            </select>
-        </div>
-        <button type="submit" class="btn btn-primary my-2">Publicar</button>
-    </form>
+{% block conteudo %}
+<div class="container my-5">
+  {% if messages %}
+    {% for message in messages %}
+      <div class="alert {{ message.tags }}" role="alert">{{ message }}</div>
+    {% endfor %}
+  {% endif %}
+  
+  <h1>Escrever Notícia</h1>
+  
+  <form id="form_noticia" action="{% url 'escrever_noticia' %}" method="POST" enctype="multipart/form-data">
+    {% csrf_token %}
+    
+    <div class="form-group">
+      <label for="titulo">Título</label>
+      <input type="text" class="form-control my-2" id="titulo" name="titulo" required />
+    </div>
+    
+    <div class="form-group">
+      <label for="subtitulo">Subtítulo</label>
+      <input type="text" class="form-control my-2" id="subtitulo" name="subtitulo" required />
+    </div>
+    
+    <div class="form-group">
+      <label for="capa">Capa</label>
+      <input type="file" class="form-control my-2" id="capa" name="capa" />
+    </div>
+    
+    <div class="form-group">
+      <label for="categoria">Categoria</label>
+      <select class="form-control my-2" id="categoria" name="categoria" required>
+        {% for categoria in categorias %}
+          <option value="{{ categoria.id }}">{{ categoria.nome }}</option>
+        {% endfor %}
+      </select>
+    </div>
+    
+    <input type="hidden" id="conteudo_hidden" name="conteudo">
+    
+    <div class="form-group conteudo_container my-2">
+      <label for="conteudo" class = "my-2">Conteúdo</label>
+     
+      <div id="toolbar">
+        <button class="ql-bold" title="Negrito" type="button"></button>
+        <button class="ql-italic" title="Itálico"  type="button"></button>
+        <button class="ql-underline" title="Sublinhado" type="button"></button>
+        <button class="ql-strike" title="Tachado" type="button"></button>
+        <button class="ql-blockquote" title="Citação" type="button"></button>
+        <button class="ql-code-block" title="Bloco de código" type="button"></button>
+        <button class="ql-link" title="Link"></button>
+        <button class="ql-image" title="Imagem" type="button"></button>
+        <button class="ql-list"title="Lista ordenada"  value="ordered" type="button"></button>
+        <button class="ql-list" title="Bullet points" value="bullet" type="button"></button>
+        <button class="ql-clean" title="Limpar formatação" type="button"></button>
+      </div>
+      <div id="conteudo" style="height: 700px;"></div>
+    </div>
+
+    <button type="button" class="btn btn-primary my-2" onclick="enviarFormulario()">Publicar</button>
+  </form>
 </div>
+
+<link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
+<script src="https://cdn.quilljs.com/1.3.6/quill.min.js"></script>
+
+<script>
+  const quill = new Quill("#conteudo", {
+    modules: {
+      toolbar: "#toolbar",
+    },
+    placeholder: "No que você está pensando hoje?",
+    theme: "snow"
+  });
+
+  const toolbar = quill.getModule('toolbar');
+    toolbar.addHandler('link', () => {
+        const range = quill.getSelection();
+        if (range) {
+            const url = prompt('Insira a URL do link:');
+            if (url) {
+                const text = quill.getText(range.index, range.length);
+                if (text) {
+                    quill.format('link', url); 
+                } else {
+                    alert('Por favor, selecione o texto para aplicar o link.');
+                }
+            }
+        }
+    });
+
+  toolbar.addHandler('image', () => {
+      const input = document.createElement('input');
+      input.setAttribute('type', 'file');
+      input.setAttribute('accept', 'image/*');
+      input.click();
+
+      input.onchange = () => {
+          const file = input.files[0];
+          const reader = new FileReader();
+          
+          reader.onloadend = () => {
+              const range = quill.getSelection();
+              quill.insertEmbed(range.index, 'image', reader.result);
+          };
+
+          if (file) {
+              reader.readAsDataURL(file); 
+          }
+      };
+  });
+  function enviarFormulario() {
+
+    document.getElementById('conteudo_hidden').value = quill.root.innerHTML;
+
+    const form = document.getElementById('form_noticia');
+
+
+    const formData = new FormData(form);
+
+
+    fetch(form.action, {
+      method: 'POST',
+      body: formData,
+      headers: {
+        'X-CSRFToken': document.querySelector('[name=csrfmiddlewaretoken]').value 
+      }
+    })
+    .then(response => {
+      if (!response.ok) {
+        throw new Error('Erro na requisição: ' + response.statusText);
+      }
+      return response.text(); 
+    })
+    .then(data => {
+
+      document.body.innerHTML = data;  
+    })
+    .catch(error => {
+      console.error('Erro:', error);
+    });
+  }
+
+
+</script>
 {% endblock %}

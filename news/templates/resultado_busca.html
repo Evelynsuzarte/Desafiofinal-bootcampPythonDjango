@@ -29,9 +29,9 @@
       {% for noticia in noticias %}
         <div class="col-md-6 mb-4">
           <div class="card h-100">
-            {% if noticia.imagem %}
+            {% if noticia.capa %}
               <img 
-                src="{{ noticia.imagem.url }}" 
+                src="{{ noticia.capa.url }}" 
                 class="card-img-top" 
                 alt="{{ noticia.titulo }}" 
                 style="height: 200px; object-fit: cover;">

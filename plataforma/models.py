@@ -19,7 +19,7 @@ class Noticia(models.Model):
     titulo = models.CharField(max_length=200)
     subtitulo = models.TextField()
     conteudo = models.TextField()
-    imagem = models.ImageField(upload_to='noticias/', blank=True, null=True)
+    capa = models.ImageField(upload_to='noticias/', blank=True, null=True)
     categoria = models.ForeignKey(Categoria, on_delete=models.CASCADE, related_name='noticias')
     autor = models.ForeignKey(User, on_delete=models.CASCADE)
     data_publicacao = models.DateTimeField(auto_now_add=True)
