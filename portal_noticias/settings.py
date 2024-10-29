@@ -150,3 +150,6 @@ MESSAGE_TAGS = {
     constants.INFO: 'alert-info',
     constants.WARNING: 'alert-warning',
 }
+
+CSRF_COOKIE_SECURE = True
+SESSION_COOKIE_SECURE = True

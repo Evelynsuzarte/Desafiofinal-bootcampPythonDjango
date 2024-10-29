@@ -20,8 +20,7 @@
     
     <h1>Editar Notícia</h1>
     
-    <form id="form_noticia" action="{% url 'editar_noticia' noticia.id %}" method="POST" enctype="multipart/form-data">
-        {% csrf_token %}
+    <form id="form_noticia" action="{% url 'editar_noticia' noticia.id %}" method="POST" enctype="multipart/form-data">{% csrf_token %}
         
         <div class="form-group">
             <label for="titulo">Título</label>
