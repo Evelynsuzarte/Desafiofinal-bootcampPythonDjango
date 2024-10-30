@@ -48,6 +48,8 @@ O planejamento da atividade seguiu também a partir da reunião do squad para mo
 - Aplicar alterações no banco de dados: <br>
 `python manage.py migrate`
 
+- Implementar as inserções no banco de dados: <br>
+`python manage.py inserir_dados`
 
 - Criar um usuário administrador: <br>
 `python manage.py createsuperuser`
