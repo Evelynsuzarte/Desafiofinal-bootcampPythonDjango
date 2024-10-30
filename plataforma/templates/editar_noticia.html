@@ -9,7 +9,7 @@
     {% include "partials/navbar.html" %}
     {% endblock %}
 {% block conteudo %}
-<div class="container mt-5">
+<div class="container mt-5" style= "max-width: 1100px;">
     {% if messages %}
         {% for message in messages %}
             <div class="alert {{ message.tags }}" role="alert">
@@ -49,7 +49,7 @@
         
         <input type="hidden" id="conteudo_hidden" name="conteudo">
         
-        <div class="form-group conteudo_container my-2" style="text-align: justify; max-width: 900px;">
+        <div class="form-group conteudo_container my-2" style="text-align: justify; width: 100%;">
             <label for="conteudo">Conteúdo</label>
             <div id="toolbar">
                 <select class="ql-header" title="Cabeçalhos">
@@ -73,7 +73,7 @@
             <div id="conteudo" style="height: 700px;">{{ noticia.conteudo|safe }}</div>  
         </div>
   
-        <button type="button" class="btn btn-primary my-2" onclick="enviarFormulario()">Publicar</button>
+        <button type="button" class="btn btn-outline-primary my-2 w-100" onclick="enviarFormulario()">Salvar</button>
     </form>
 </div>
 
