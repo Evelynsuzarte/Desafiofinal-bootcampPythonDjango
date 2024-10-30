@@ -28,6 +28,7 @@ SECRET_KEY = 'django-insecure-o6-bd@@r%m2!70wuhcv$dso!a=ie#k*v4v9y=c2l=dr*n*i*^_
 DEBUG = True
 
 ALLOWED_HOSTS = ['kjnews.onrender.com', 'localhost', '127.0.0.1']
+ALLOWED_HOSTS = []
 
 # Application definition
 
